@@ -8,6 +8,14 @@
 <body>
 
     <div class="container">
+        {% if exito %}
+            <h1>{{ exito }}</h1>
+        {% endif %}
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
         <h1>Centro de Biotecnología Agropecuaria</h1>
         <h2>Registro de Aprendices</h2>
         
