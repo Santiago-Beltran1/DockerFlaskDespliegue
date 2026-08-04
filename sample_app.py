@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, render_template 
 import pymysql
 import os
+import time
 
 sample = Flask(__name__)
 
@@ -13,25 +14,30 @@ conf_db = {
 }
 
 def in_bd():
-    try:
-        conn = pymysql.connect(**conf_db) 
-        cursor = conn.cursor()
-        cursor.execute(
-            """
-            CREATE TABLE IF NOT EXISTS aprendices (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                nombre_completo VARCHAR(100) NOT NULL,
-                numero_documento VARCHAR(20) NOT NULL,
-                ficha VARCHAR(20) NOT NULL,
-                creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-            """
-        )
-        conn.commit()
-        conn.close()
-        print("Se inició la base de datos correctamente")
-    except Exception as e:
-        print(f"Error al iniciar la base de datos: {e}")
+    retries = 10
+    while retries > 0:
+        try:
+            conn = pymysql.connect(**conf_db) 
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+                CREATE TABLE IF NOT EXISTS aprendices (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    nombre_completo VARCHAR(100) NOT NULL,
+                    numero_documento VARCHAR(20) NOT NULL,
+                    ficha VARCHAR(20) NOT NULL,
+                    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+                """
+            )
+            conn.commit()
+            conn.close()
+            print("Se inició la base de datos correctamente")
+            break
+        except Exception as e:
+            print(f"Esperando a la base de datos... ({e})")
+            retries -= 1
+            time.sleep(3)
 
 in_bd()
 
@@ -39,6 +45,7 @@ in_bd()
 def home():
     registros = []
     mens_error = None
+    mens_exito = None
 
     try:
         conn = pymysql.connect(**conf_db) 
@@ -46,10 +53,11 @@ def home():
         cursor.execute("SELECT id, nombre_completo, numero_documento, ficha, creado_en FROM aprendices ORDER BY id DESC")
         registros = cursor.fetchall()
         conn.close()
+        mens_exito = "CONEXIÓN EXITOSA A LA BASE DE DATOS" 
     except Exception as e:
         mens_error = f"Error al consultar los datos de la bd: {e}"
 
-    return render_template("index.html", lista_aprendices=registros, error=mens_error)
+    return render_template("index.html", lista_aprendices=registros, error=mens_error, exito=mens_exito)
 
 
 @sample.route("/registrar", methods=["POST"])
