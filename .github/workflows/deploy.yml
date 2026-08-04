@@ -30,3 +30,10 @@ jobs:
           context: ./nginx
           push: true
           tags: santiagob084/mi-nginx:latest
+
+      - name: Construir y subir imagen frontend
+        uses: docker/build-push-action@v4
+        with:
+          context: ./frontend
+          push: true
+          tags: santiagob084/mi-frontend:latest
