@@ -9,7 +9,7 @@
 
     <div class="container">
         {% if exito %}
-            <h1>{{ exito }}</h1>
+            <p class="exito">{{ exito }}</p>
         {% endif %}
 
         {% if error %}
@@ -18,10 +18,6 @@
 
         <h1>Centro de Biotecnología Agropecuaria</h1>
         <h2>Registro de Aprendices</h2>
-        
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
 
         <form action="/registrar" method="POST">
             <div class="form-group">

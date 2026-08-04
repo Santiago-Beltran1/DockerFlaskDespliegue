@@ -156,3 +156,14 @@ tr:hover td {
     margin-bottom: 25px;
     border: 1px solid rgba(239, 68, 68, 0.2);
 }
+
+.exito {
+    background-color: rgba(68, 68, 239, 0.1);
+    color: #4aef44;
+    padding: 14px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(173, 68, 239, 0.2);
+}
