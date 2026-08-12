@@ -1,0 +1,34 @@
+# Archivos de entorno y credenciales (SENSISBLE)
+.env
+.env.*
+*.env
+
+# Datos persistentes locales de Nginx Proxy Manager
+npm_data/
+npm_letsencrypt/
+
+# Python / Flask
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Node / Angular / React (Frontend)
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+
+# Docker / Logs
+*.log
+
+# Archivos de sistema / IDEs
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
