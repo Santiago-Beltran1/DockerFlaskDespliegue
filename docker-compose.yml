@@ -1,0 +1,62 @@
+services:
+  proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: proxy-manager
+    restart: always
+    ports: 
+      - "80:80"   # HTTP para Let's Encrypt y acceso web
+      - "81:81"   # Panel de administración de NPM
+      - "443:443" # HTTPS
+    volumes:
+      - ./npm_data:/data
+      - ./npm_letsencrypt:/etc/letsencrypt
+    networks:
+      - red_proyecto
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - red_proyecto
+
+  backend:
+    image: santiagob084/mi-api:latest
+    restart: always
+    environment:
+      - DB_HOST=db
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    depends_on:
+      - db
+    networks:
+      - red_proyecto
+
+  nginx:
+    image: santiagob084/mi-nginx:latest
+    container_name: proxy_nginx
+    restart: always
+    depends_on:
+      - backend
+    networks:
+      - red_proyecto
+
+  frontend:
+    image: santiagob084/mi-frontend:latest
+    restart: always
+    networks:
+      - red_proyecto
+
+volumes:
+  db_data:
+
+networks:
+  red_proyecto:
+    driver: bridge
