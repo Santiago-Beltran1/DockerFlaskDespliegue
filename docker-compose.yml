@@ -26,9 +26,6 @@ services:
     networks:
       - red_proyecto
 
-uptime-kuma-data:
-    name: red_proyecto
-
   backend:
     image: santiagob084/mi-api:latest
     restart: always
@@ -57,14 +54,7 @@ uptime-kuma-data:
     networks:
       - red_proyecto
 
-volumes:
-  db_data:
-
-networks:
-  red_proyecto:
-    driver: bridge
-
-uptime-kuma:
+  uptime-kuma:
     image: louislam/uptime-kuma:1
     container_name: uptime-kuma
     restart: always
@@ -73,4 +63,12 @@ uptime-kuma:
     volumes:
       - uptime-kuma-data:/app/data
     networks:
-      - red-proyecto
+      - red_proyecto
+
+volumes:
+  db_data:
+  uptime-kuma-data:
+
+networks:
+  red_proyecto:
+    driver: bridge

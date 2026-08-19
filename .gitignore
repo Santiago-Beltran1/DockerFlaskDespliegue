@@ -31,4 +31,5 @@ npm-debug.log*
 .vscode/
 .idea/
 .DS_Store
-Thumbs.db
+Thumbs.dbnpm_data/
+npm_data/
