@@ -17,4 +17,4 @@ def test_home_status_code(client):
         mock_cursor.fetchall.return_value = []
 
         response = client.get('/')
-        assert response.status_code == 404
+        assert response.status_code == 200
