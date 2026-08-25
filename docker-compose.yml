@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
@@ -71,4 +73,8 @@ volumes:
 
 networks:
   red_proyecto:
+<<<<<<< HEAD
     driver: bridge
+=======
+    driver: bridge
+>>>>>>> 6b2d372 (Config Construcción y subida de imagén)
