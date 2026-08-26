@@ -73,7 +73,7 @@ jobs:
           image-ref: 'santiagob084/mi-api:latest'
           format: 'table'
           exit-code: '1' # Si encuentra alguna falla
-          ignored-unfixed: true
+          ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH' # Los tipos de gravedad de error que se mostraran 
 
