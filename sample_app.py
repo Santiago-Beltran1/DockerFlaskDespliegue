@@ -81,4 +81,5 @@ def registrar():
     return redirect("/") 
 
 if __name__ == "__main__":
-    sample.run(host="0.0.0.0", port=5050, debug=True)
+        modo_debug = os.getenv("FLASK_DEBUG", "True").lower() == "true"
+        sample.run(host='0.0.0.0', port=5050, debug=modo_debug) # nosec B104
