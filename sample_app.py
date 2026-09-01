@@ -1,19 +1,17 @@
-from flask import Flask, request, redirect, render_template, jsonify 
+from flask import Flask, request, redirect, render_template
 import pymysql
 import os
 import time
 
 sample = Flask(__name__)
 
-# erro1:
-contra = "contra123"
-
+# Configuración segura: se leen credenciales desde el entorno sin contraseñas hardcodeadas
 conf_db = {
     "host": os.environ.get("DB_HOST", "db"),
     "user": os.environ.get("DB_USER", "root"),
-    "password": os.environ.get("DB_PASSWORD", contra),
+    "password": os.environ.get("DB_PASSWORD", ""),  # Sin variables hardcodeadas (Solución Bandit B105)
     "database": os.environ.get("DB_NAME", "adso_db"),
-    "port": 3306
+    "port": int(os.environ.get("DB_PORT", 3306))
 }
 
 def in_bd():
@@ -46,8 +44,7 @@ in_bd()
 
 @sample.route("/")
 def home():
-    # error pytest: Retorna 500
-    return jsonify({"error": "Fallo intencional para Pytest"}), 500
+    # Solución Pytest: Se eliminó el jsonify con 500 forzado y se restaura la vista
     registros = []
     mens_error = None
     mens_exito = None
@@ -86,7 +83,6 @@ def registrar():
     return redirect("/") 
 
 if __name__ == "__main__":
-        """modo_debug = os.getenv("FLASK_DEBUG", "True").lower() == "true"
-        sample.run(host='0.0.0.0', port=5050, debug=modo_debug) # nosec B104"""
-        #error 3 bandit
-        sample.run(host='0.0.0.0', port=5050, debug=True)
+    # Solución Bandit: Se evalúa FLASK_DEBUG desde entorno (B201) y se agrega # nosec para el bind en Docker (B104)
+    modo_debug = os.getenv("FLASK_DEBUG", "False").lower() == "true"
+    sample.run(host='0.0.0.0', port=5050, debug=modo_debug)  # nosec B104

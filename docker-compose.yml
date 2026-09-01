@@ -73,8 +73,15 @@ volumes:
 
 networks:
   red_proyecto:
-<<<<<<< HEAD
     driver: bridge
-=======
-    driver: bridge
->>>>>>> 6b2d372 (Config Construcción y subida de imagén)
+
+dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8080:8080"
+    networks:
+      - red_proyecto
