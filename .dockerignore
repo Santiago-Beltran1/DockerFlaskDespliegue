@@ -5,3 +5,5 @@ npm_data/
 .env
 .git
 __pycache__/
+db_data
+npm_letsencrypt
