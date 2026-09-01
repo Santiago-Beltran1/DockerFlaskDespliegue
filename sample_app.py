@@ -4,6 +4,7 @@ import os
 import time
 
 sample = Flask(__name__)
+app = sample
 
 # Configuración segura: se leen credenciales desde el entorno sin contraseñas hardcodeadas
 conf_db = {
