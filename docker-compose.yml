@@ -67,6 +67,17 @@ services:
     networks:
       - red_proyecto
 
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8888:8080"
+    networks:
+      - red_proyecto
+
 volumes:
   db_data:
   uptime-kuma-data:
@@ -75,13 +86,3 @@ networks:
   red_proyecto:
     driver: bridge
 
-dozzle:
-    image: amir20/dozzle:latest
-    container_name: dozzle
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - "8080:8080"
-    networks:
-      - red_proyecto
